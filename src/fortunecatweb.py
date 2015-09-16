@@ -8,5 +8,5 @@ def get_fortune():
     f = FortuneCatDB(DB_PATH).random_quote()
     return "%s\n\n  -- %s" % (f.quote, f.author)
 
-run(port=8081)
+run(host='0.0.0.0', port=8081)
 
