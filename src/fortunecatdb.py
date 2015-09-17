@@ -17,13 +17,19 @@ class FortuneCatDB(object):
 
     def all_quotes(self):
         cursor = self._conn.cursor()
-        return cursor.execute("SELECT * FROM quips")
+        return [ Fortune(*x) for x in cursor.execute("SELECT * FROM quips") ]
 
     def random_quote(self):
         q = self._conn.execute("SELECT * FROM quips ORDER BY RANDOM() LIMIT 1")
         return Fortune(*q.fetchone())
 
     def add_quote(self, quote, author, submitter):
+        if quote is None or len(quote.strip()) == 0:
+            raise StandardError("Quote may not be empty!")
+        if author is None or len(author.strip()) == 0:
+            raise StandardError("Author may not be empty!")
+        if submitter is None or len(submitter.strip()) == 0:
+            raise StandardError("Submitter may not be empty!")
         cursor = self._conn.cursor()
         cursor.execute(
                 "INSERT INTO quips VALUES (?, ?, ?, ?)",
