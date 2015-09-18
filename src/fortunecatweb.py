@@ -19,7 +19,7 @@ def fortune_random():
     bottle.response.content_type = 'text/plain; charset=utf-8'
     f = FortuneCatDB(DB_PATH).random_quote()
     if f.author is None or f.author.lower() == "none" or len(f.author) == 0:
-        return "%s"
+        return "%s" % (f.quote, )
     else:
         return "%s\n\n  -- %s" % (f.quote, f.author)
 
