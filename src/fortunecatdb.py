@@ -32,8 +32,6 @@ class FortuneCatDB(object):
     def add_quote(self, quote, author, submitter, tags):
         if quote is None or len(quote.strip()) == 0:
             raise StandardError("Quote may not be empty!")
-        if author is None or len(author.strip()) == 0:
-            raise StandardError("Author may not be empty!")
         if submitter is None or len(submitter.strip()) == 0:
             raise StandardError("Submitter may not be empty!")
         cursor = self._conn.cursor()

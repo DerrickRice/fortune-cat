@@ -21,7 +21,9 @@
     </td>
   </tr>
   <tr>
-    <td>Author/Source<br/>i.e. the "speaker" of the quote.</td>
+    <td>Author/Source<br/>i.e. the "speaker" of the quote.<br/>
+    May be empty.
+    </td>
     <td>
       <input type="text" name="author" style="font-family:monospace; width:32ex;" placeholder="Confucius"/>
     </td>
