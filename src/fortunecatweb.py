@@ -30,6 +30,17 @@ def fortune_add():
     """ Renders the page / form for adding a new fortune """
     return bottle.template('fortune_add')
 
+def reflow(content):
+    import textwrap, re
+
+    def replace_content(content):
+        if len(content) == 0 or content.isspace():
+            return content
+        else:
+            return textwrap.fill(content, 32)
+
+    return "".join([ replace_content(x) for x in re.split(r'(\n\s*\n)', content) ])
+
 @bottle.post('/fortune/submit')
 def fortune_submit():
     """ Where POST requests land with the new fortunes to add """
@@ -37,13 +48,21 @@ def fortune_submit():
     author = bottle.request.forms.get('author')
     submitter = bottle.request.forms.get('submitter')
     tags = bottle.request.forms.get('tags')
+    do_reflow = bottle.request.forms.get('reflow')
+
+
     error = None
     try:
+        if do_reflow:
+            content = reflow(content)
+        elif ([ x for x in content.split('\n') if len(x) > 32 ]):
+            raise StandardError("You have a line longer than 32 and asked for no reflow!")
         FortuneCatDB(DB_PATH).add_quote(content, author, submitter, tags)
     except Exception, err:
         error = err
 
     return bottle.template('fortune_submit', error=error)
 
-bottle.run(host='::', port=8081)
+if __name__ == "__main__":
+    bottle.run(host='::', port=8081)
 
