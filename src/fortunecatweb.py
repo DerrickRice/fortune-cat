@@ -36,9 +36,10 @@ def fortune_submit():
     content = bottle.request.forms.get('content')
     author = bottle.request.forms.get('author')
     submitter = bottle.request.forms.get('submitter')
+    tags = bottle.request.forms.get('tags')
     error = None
     try:
-        FortuneCatDB(DB_PATH).add_quote(content, author, submitter)
+        FortuneCatDB(DB_PATH).add_quote(content, author, submitter, tags)
     except Exception, err:
         error = err
 

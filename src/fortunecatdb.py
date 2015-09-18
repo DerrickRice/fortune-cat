@@ -6,7 +6,7 @@ import sys
 import collections
 
 Fortune = collections.namedtuple('Fortune',
-        ['created', 'quote', 'author', 'submitter'])
+        ['id', 'created', 'quote', 'author', 'submitter', 'tags'])
 
 class FortuneCatDB(object):
     def __init__(self, path):
@@ -17,13 +17,19 @@ class FortuneCatDB(object):
 
     def all_quotes(self):
         cursor = self._conn.cursor()
-        return [ Fortune(*x) for x in cursor.execute("SELECT * FROM quips") ]
+        return [ Fortune(*x) for x in cursor.execute(
+            "SELECT id, created, quote, author, submitter, tags FROM fortunes") ]
 
     def random_quote(self):
-        q = self._conn.execute("SELECT * FROM quips ORDER BY RANDOM() LIMIT 1")
-        return Fortune(*q.fetchone())
+        q = self._conn.execute(
+            "SELECT id, created, quote, author, submitter, tags FROM fortunes ORDER BY RANDOM() LIMIT 1")
+        x = q.fetchone()
+        if x is None:
+            return None
+        else:
+            return Fortune(*x)
 
-    def add_quote(self, quote, author, submitter):
+    def add_quote(self, quote, author, submitter, tags):
         if quote is None or len(quote.strip()) == 0:
             raise StandardError("Quote may not be empty!")
         if author is None or len(author.strip()) == 0:
@@ -32,8 +38,8 @@ class FortuneCatDB(object):
             raise StandardError("Submitter may not be empty!")
         cursor = self._conn.cursor()
         cursor.execute(
-                "INSERT INTO quips VALUES (?, ?, ?, ?)",
-                (int(time.time()), quote, author, submitter))
+                "INSERT INTO fortunes (created, quote, author, submitter, tags) VALUES (?, ?, ?, ?, ?)",
+                (int(time.time()), quote, author, submitter, tags))
         self._conn.commit()
 
     @staticmethod
@@ -42,13 +48,14 @@ class FortuneCatDB(object):
             raise StandardError("Database already exists")
         with sqlite3.connect(path) as conn:
             cursor = conn.cursor()
-            cursor.execute("""CREATE TABLE quips(
+            cursor.execute("""CREATE TABLE fortunes(
+                id INTEGER PRIMARY KEY,
                 created INTEGER(8),
                 quote TEXT,
                 author TEXT,
-                submitter TEXT)""")
-
-
+                submitter TEXT,
+                tags TEXT)""")
+            conn.commit()
 
 if __name__ == "__main__":
     db_path = sys.argv[1]
