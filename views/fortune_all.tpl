@@ -14,7 +14,7 @@
 % for x in fortunes:
 <tr>
   <td>{{x.id}}</td>
-  <td>{{x.quote}}</td>
+  <td><pre>{{x.quote}}</pre></td>
   <td>{{x.author}}</td>
   <td>{{x.submitter}}</td>
   <td>{{x.created}}</td>
