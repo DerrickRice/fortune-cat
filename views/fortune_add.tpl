@@ -6,6 +6,14 @@
 <form action="/fortune/submit" method="post">
 <table>
   <tr>
+    <td>Reflow?</br>
+    Uncheck if you have special formatting
+    </td>
+    <td>
+      <input type="checkbox" name="reflow" value="yes" checked="checked"/>
+    </td>
+  </tr>
+  <tr>
     <td>Fortune/Quote:<br/>Note: 32 char width tape!</td>
     <td>
       <textarea name="content" style="font-family:monospace; width:32ex;" rows="30"
