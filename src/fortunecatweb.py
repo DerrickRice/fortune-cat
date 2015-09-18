@@ -50,6 +50,8 @@ def fortune_submit():
     tags = bottle.request.forms.get('tags')
     do_reflow = bottle.request.forms.get('reflow')
 
+    if '@' in submitter:
+        submitter = submitter[:submitter.index('@')]
 
     error = None
     try:

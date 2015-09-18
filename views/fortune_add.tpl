@@ -33,7 +33,7 @@
     </td>
   </tr>
   <tr>
-    <td>Your unix name<br/>(so we know who contributed the quote)</td>
+    <td>Your @fb.com addr<br/>(so we know who contributed the quote)</td>
     <td>
       <input type="text" name="submitter" style="font-family:monospace; width:32ex;" placeholder="unixname" />
     </td>
