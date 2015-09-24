@@ -6,7 +6,7 @@
 <tr>
   <th>ID</th>
   <th>Fortune/Quote</th>
-  <th>Autror</th>
+  <th>Author</th>
   <th>Submitted By</th>
   <th>Submit TS</th>
   <th>Tags</th>

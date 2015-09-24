@@ -57,21 +57,8 @@ class FortuneCatDB(object):
 
 if __name__ == "__main__":
     db_path = sys.argv[1]
-    if not os.path.exists(db_path):
+    if os.path.exists(db_path):
+        print "Database already exists."
+    else:
         FortuneCatDB.create_db(db_path)
-    db = FortuneCatDB(db_path)
-    while True:
-        data = raw_input('qt: ')
-        if len(data) == 0:
-            break
-        db.add_quote(data, 'dfrice', 'dfrice')
-
-    print "Done. Current contents of database:"
-
-    for x in db.all_quotes():
-        print "%r" % (x, )
-
-    print "Random quote 1:"
-    print "%r" % (db.random_quote(), )
-    print "Random quote 2:"
-    print "%r" % (db.random_quote(), )
+        print "Database created."
