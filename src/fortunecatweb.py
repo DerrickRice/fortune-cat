@@ -69,7 +69,7 @@ def fortune_submit():
     try:
         if do_reflow:
             content = reflow(content)
-        elif ([ x for x in content.split('\n') if len(x) > 32 ]):
+        elif ([ x for x in content.splitlines() if len(x) > 32 ]):
             raise StandardError("You have a line longer than 32 and asked for no reflow!")
         get_db().add_quote(content, author, submitter, tags)
     except Exception, err:
